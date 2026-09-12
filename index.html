@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engr. Tradio — Surveyor Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Playfair+Display:ital,wght@1,500;1,600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar" aria-label="Main navigation">
+      <a class="navbar__logo" href="#" aria-label="Home">
+        <span class="navbar__logo-mark">JT</span>
+      </a>
+      <ul class="navbar__links" id="nav-links">
+        <li><a class="is-active" href="#">HOME</a></li>
+        <li><a href="#">Application Letter</a></li>
+        <li><a href="#">Certificates &amp; Achievements</a></li>
+        <li><a href="#">Trainings &amp; Seminars</a></li>
+        <li><a href="#">Work Experience</a></li>
+      </ul>
+      <button
+        class="navbar__toggle"
+        id="nav-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="nav-links"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <div class="hero__stage" aria-hidden="true">
+      <figure class="frame frame--rule-left" style="--x: 1%; --y: 27%; --w: 20%; --h: 40%;">
+        <img src="assets/image_1.png" alt="Total station on a tripod" loading="eager" />
+      </figure>
+      <figure class="frame frame--zoom" style="--x: 26%; --y: 14%; --w: 22.5%; --h: 68%;">
+        <img src="assets/image_2.png" alt="Topographic contour map" loading="eager" />
+      </figure>
+      <figure class="frame" style="--x: 52.5%; --y: 14%; --w: 21.5%; --h: 68%;">
+        <img src="assets/image_3.png" alt="Drone LiDAR scanning a terrain" loading="eager" />
+      </figure>
+      <figure class="frame frame--rule-right" style="--x: 78.5%; --y: 24%; --w: 21%; --h: 46%;">
+        <img src="assets/image_4.png" alt="GNSS rover on a tripod in the field" loading="eager" />
+      </figure>
+    </div>
+
+    <div class="hero__banner">
+      <h1 class="hero__name">Engr. Tradio</h1>
+      <a class="hero__cta" href="#about">
+        Get to Know Me
+        <svg viewBox="0 0 48 16" width="48" height="16" aria-hidden="true">
+          <line x1="0" y1="8" x2="40" y2="8" stroke="currentColor" stroke-width="2" />
+          <polyline points="34,2 42,8 34,14" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </a>
+    </div>
+
+    <p class="hero__tagline">Measure Precisely.&nbsp; Map Intelligently.&nbsp; Shape Confidently.</p>
+  </header>
+
+  <script src="script.js"></script>
+</body>
+</html>
