@@ -495,6 +495,61 @@ html {
   object-position: top center; /* crop the bottom flourish, never the headline */
 }
 
+/* ---------- Footer ---------- */
+
+/* Closing bookend: the hero tagline restated over --ink, echoing the hero's
+   dark banner. snap-align: end lets the scroll glide cleanly off the last
+   full-screen section onto it. */
+.footer {
+  scroll-snap-align: end;
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  padding: clamp(3rem, 8vh, 5rem) 1.5rem clamp(2.25rem, 6vh, 3.5rem);
+  background: var(--ink);
+  text-align: center;
+}
+
+.footer__ornament {
+  display: flex;
+  align-items: center;
+  width: min(360px, 70%);
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--yellow);
+}
+
+.footer__ornament::before,
+.footer__ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgb(240 206 46 / 0.55);
+}
+
+.footer__quote {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3.2vw, 2.75rem);
+  line-height: 1.4;
+  color: #fdf3e7; /* tagline cream, straight off the hero */
+}
+
+.footer__name {
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+
+.footer__copy {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: rgb(247 239 226 / 0.6);
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -661,5 +716,9 @@ html {
 
   .commitment__card {
     height: auto;
+  }
+
+  .footer {
+    gap: 1rem;
   }
 }
