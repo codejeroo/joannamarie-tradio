@@ -454,6 +454,47 @@ html {
   object-position: top center;
 }
 
+/* ---------- Commitment (field prints + values card) ---------- */
+
+/* Tiled-artwork approach again (see About Me): commitment_main.png carries the
+   whole card — headline, five values, compass rose, landscape blend. The two
+   field photos stack as cover-cropped "prints" on a warm off-white mat. */
+.commitment {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  /* definite row height — without this the auto track sizes to the photos'
+     intrinsic height and the columns overlap below the fold */
+  grid-template-rows: 100%;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--cream);
+}
+
+.commitment__shots {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 2.2vh, 1.75rem);
+  padding: clamp(0.75rem, 2.2vh, 1.75rem);
+  background: #fffdf8; /* same warm white as the navbar pill */
+}
+
+.commitment__shots img {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: cover;
+  box-shadow: 0 10px 28px rgb(38 38 38 / 0.16);
+}
+
+.commitment__card {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center; /* crop the bottom flourish, never the headline */
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -598,5 +639,27 @@ html {
 
   .aboutme__photo {
     max-height: 72vh; /* object-fit: cover keeps the face/hard hat as it crops */
+  }
+
+  /* Commitment un-tiles: prints side by side up top, card shown whole below. */
+  .commitment {
+    height: auto;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .commitment__shots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 46vh;
+  }
+
+  .commitment__shots img {
+    height: 100%;
+  }
+
+  .commitment__card {
+    height: auto;
   }
 }
