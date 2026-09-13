@@ -550,6 +550,25 @@ html {
   color: rgb(247 239 226 / 0.6);
 }
 
+/* ---------- Application Letter page ---------- */
+
+/* Whole page is the letter artwork (application_letter.png, ~16:9) — at
+   16:9-class viewports cover crops nothing; it fills edge to edge. */
+.letter {
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--cream); /* matches the art's own tone for any letterbox */
+}
+
+.letter__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -716,6 +735,22 @@ html {
 
   .commitment__card {
     height: auto;
+  }
+
+  /* Letter page shows the artwork whole on small screens — cover would
+     slice the paragraph. Cream letterboxing, cleared of the fixed navbar. */
+  .letter {
+    height: auto;
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    padding: 8.5rem 1.25rem 2.5rem;
+  }
+
+  .letter__art {
+    height: auto;
+    max-width: min(92vw, 720px);
+    box-shadow: 0 10px 28px rgb(38 38 38 / 0.16);
   }
 
   .footer {
