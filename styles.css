@@ -426,6 +426,34 @@ html {
   text-shadow: 0 1px 6px rgb(38 38 38 / 0.25);
 }
 
+/* ---------- About Me (bio + skills panels) ---------- */
+
+/* Unlike every other section, this one ships as two pre-composed artwork
+   images (aboutme_info.png + aboutme_image.jpg) instead of HTML text — the
+   grid just tiles them side by side, ~57/43 like the mockup. */
+.aboutme {
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--cream); /* fills any sliver left by the cover crop */
+}
+
+.aboutme__panels {
+  display: grid;
+  grid-template-columns: 57% 43%;
+  height: 100%;
+}
+
+.aboutme__panels img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* crop from the bottom: keep the card's "ABOUT Me" header and the face/hard hat */
+  object-position: top center;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -551,5 +579,24 @@ html {
 
   .about__cred {
     height: clamp(2.8rem, 9vw, 3.6rem);
+  }
+
+  /* About Me stacks: card shown whole, portrait capped so it doesn't tower. */
+  .aboutme {
+    height: auto;
+    min-height: 0;
+  }
+
+  .aboutme__panels {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .aboutme__panels img {
+    height: auto;
+  }
+
+  .aboutme__photo {
+    max-height: 72vh; /* object-fit: cover keeps the face/hard hat as it crops */
   }
 }
