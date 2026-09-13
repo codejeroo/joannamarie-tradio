@@ -127,12 +127,18 @@ html {
   z-index: 5;
 }
 
-.frame {
+/* Shared absolute-positioning convention driven by inline custom props. */
+.frame,
+.pin {
   position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: var(--w);
-  height: var(--h);
+  left: var(--x, auto);
+  top: var(--y, auto);
+  right: var(--r, auto);
+  width: var(--w, auto);
+  height: var(--h, auto);
+}
+
+.frame {
   border: 12px solid var(--yellow);
   background: var(--ink);
 }
@@ -314,6 +320,112 @@ html {
   color: var(--yellow);
 }
 
+/* ---------- About section ---------- */
+
+.about {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: url("assets/about_background.png") center / cover no-repeat;
+}
+
+.about__hello {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(4rem, 15vw, 12.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--yellow);
+  text-shadow: 0 6px 24px rgb(38 38 38 / 0.18);
+}
+
+.about__name {
+  font-size: clamp(1.9rem, 4.3vw, 3.9rem);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.about__photo {
+  box-shadow: 0 14px 40px rgb(38 38 38 / 0.22);
+}
+
+.about__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about__quote {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(1.05rem, 2.15vw, 1.9rem);
+  font-weight: 500;
+  font-style: italic; /* synthetic — Oswald has no italic cut */
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 10px rgb(38 38 38 / 0.25);
+}
+
+/* oversized quote marks at opposite corners of the block, like the mockup —
+   inset from the edges (never over the photos) and enlarged */
+.about__quote::before,
+.about__quote::after {
+  position: absolute;
+  font-size: 3.4em;
+  font-style: normal;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 1px 10px rgb(38 38 38 / 0.25);
+}
+
+.about__quote::before {
+  content: "\201D"; /* ” */
+  top: -0.8em;
+  right: 0.1em;
+}
+
+.about__quote::after {
+  content: "\201C"; /* “ */
+  bottom: -0.8em;
+  left: 0.1em;
+}
+
+/* credential pills — yellow capsules with the round seal overhanging the left edge */
+.about__cred {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  height: clamp(3.1rem, 5.6vh, 4.4rem);
+  padding: 0 1.4em 0 0.4em;
+  background: var(--yellow);
+  border-radius: 999px;
+  box-shadow: 0 10px 28px rgb(38 38 38 / 0.18);
+}
+
+.about__cred img {
+  flex: 0 0 auto;
+  height: 135%; /* overhangs the capsule, as in the mockup */
+}
+
+.about__cred span {
+  font-size: clamp(1rem, 1.7vw, 1.55rem);
+  font-weight: 700;
+  white-space: nowrap;
+  color: #fff;
+  text-shadow: 0 1px 6px rgb(38 38 38 / 0.25);
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -395,5 +507,49 @@ html {
     position: static;
     transform: none;
     margin-top: 1.5rem;
+  }
+
+  /* About drops out of the composed stage into a centered column. */
+  .about {
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 7.5rem 1.25rem 2.5rem;
+  }
+
+  .pin {
+    position: static;
+    width: auto;
+    height: auto;
+  }
+
+  .about__hello {
+    white-space: normal;
+    text-align: center;
+    font-size: clamp(3.5rem, 17vw, 6rem);
+  }
+
+  .about__name {
+    text-align: center;
+  }
+
+  .about__photo {
+    width: min(82%, 430px);
+  }
+
+  .about__photo img {
+    height: auto;
+  }
+
+  .about__quote {
+    position: relative; /* keeps the ::before/::after quote marks anchored */
+    max-width: 46ch;
+  }
+
+  .about__cred {
+    height: clamp(2.8rem, 9vw, 3.6rem);
   }
 }
