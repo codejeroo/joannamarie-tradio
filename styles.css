@@ -16,6 +16,12 @@ body {
   color: var(--ink);
 }
 
+/* Slide-like scrolling: snap the full-screen sections into place. */
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
 /* ---------- Hero shell ---------- */
 
 .hero {
@@ -23,20 +29,25 @@ body {
   height: 100vh;
   min-height: 620px;
   overflow: hidden;
+  scroll-snap-align: start;
   background: url("assets/background.png") center / cover no-repeat;
 }
 
 /* ---------- Navbar ---------- */
 
+/* Fixed (not literally sticky) so its flow height never offsets the
+   scroll-snap points of the full-screen sections. */
 .navbar {
-  position: relative;
-  z-index: 20;
+  position: fixed;
+  z-index: 50;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 1.5rem;
   width: min(1840px, calc(100% - 2rem));
   height: 88px;
-  margin: 1.5rem auto 0;
   padding: 0 1.5rem 0 0.75rem;
   background: #fffdf8;
   border-radius: 999px;
@@ -243,6 +254,11 @@ body {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
+  /* The hero grows past one screen here; mandatory snap would trap scrolling. */
+  html {
+    scroll-snap-type: none;
+  }
+
   .navbar {
     height: auto;
     padding: 0.75rem 1rem;
@@ -278,6 +294,7 @@ body {
   .hero {
     height: auto;
     min-height: 100vh;
+    padding-top: 8.5rem; /* clear the fixed navbar pill */
     padding-bottom: 2rem;
   }
 
