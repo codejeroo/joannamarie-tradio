@@ -952,6 +952,82 @@ body.viewer-open {
   padding: 0 1.25rem;
 }
 
+/* ---------- KAALAM section (certificates page, third screen) ---------- */
+
+/* Same full-screen recipe as .certs/.magec; a two-column spread — spotlight
+   poster on the left, write-up on the right, per the mock. */
+.kaalam {
+  position: relative;
+  height: 100vh;
+  min-height: 660px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5.5rem);
+  padding: 7.75rem clamp(1.5rem, 4vw, 4.5rem) 3.5rem; /* clears the navbar pill */
+  background: url("assets/about_background.png") center / cover no-repeat;
+}
+
+/* Portrait poster, so it runs taller than the landscape certificate shots. */
+.kaalam__img {
+  height: min(64vh, 42rem);
+}
+
+.kaalam__copy {
+  display: grid;
+  align-content: center;
+  gap: clamp(1rem, 2.4vh, 1.75rem);
+}
+
+.kaalam__title {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.05;
+  color: var(--ink);
+  text-shadow: 0 2px 0 rgb(38 38 38 / 0.18);
+  font-size: min(clamp(2rem, 4.4vw, 3.8rem), 9vh);
+}
+
+.kaalam__topic {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.25;
+  color: #fffdf8;
+  text-shadow: 0 1px 8px rgb(38 38 38 / 0.5);
+  font-size: min(clamp(1.2rem, 2.4vw, 2.1rem), 5vh);
+}
+
+.kaalam__sub {
+  margin: 0;
+  text-align: justify;
+  color: #fffdf8;
+  text-shadow: 0 1px 6px rgb(38 38 38 / 0.5);
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
+  line-height: 1.55;
+}
+
+/* KAALAM 2 mirrors KAALAM 1: write-up left, poster right. */
+.kaalam--flip {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+}
+
+/* The Kaalam pills read bigger than the certificate labels and hang a little
+   lower over the poster's bottom edge, per the mock. */
+.kaalam .cert-card__label {
+  padding: 0.7em 1.9em;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  transform: translate(-50%, 68%);
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -1215,6 +1291,32 @@ body.viewer-open {
 
   .magec__title-line2 {
     font-size: clamp(1.05rem, 4.6vw, 1.5rem);
+  }
+
+  /* KAALAM stacks: poster on top, write-up below. */
+  .kaalam {
+    height: auto;
+    min-height: 100vh;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 8.5rem 1.25rem 4.5rem;
+  }
+
+  .kaalam__img {
+    height: min(52vh, 65vw);
+  }
+
+  .kaalam__title {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+  }
+
+  .kaalam__topic {
+    font-size: clamp(1.05rem, 4.6vw, 1.5rem);
+  }
+
+  /* the mirrored screen still stacks poster-first, like KAALAM 1 */
+  .kaalam--flip .kaalam__card {
+    order: -1;
   }
 
   .footer {
