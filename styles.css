@@ -838,7 +838,7 @@ body.viewer-open {
 
 /* ---------- Certificates page ---------- */
 
-/* about_background.png full-bleed (same recipe as .about); header block up
+/* likha_bg.png full-bleed (same recipe as .about); header block up
    top, three staggered photo cards with straddling label pills below. */
 .certs {
   position: relative;
@@ -851,7 +851,7 @@ body.viewer-open {
   justify-items: center;
   gap: clamp(0.75rem, 1.6vh, 1.25rem);
   padding-top: 7.75rem; /* clears the fixed navbar pill */
-  background: url("assets/about_background.png") center / cover no-repeat;
+  background: url("assets/likha_bg.png") center / cover no-repeat;
 }
 
 .certs__title {
@@ -874,15 +874,15 @@ body.viewer-open {
 }
 
 .certs__title-line2 {
-  color: #fffdf8;
-  background: rgb(38 38 38 / 0.5); /* translucent band behind the white line */
-  padding: 0 0.5em;
+  color: #fffdf8; /* no scrim band — the shadow carries legibility */
+  text-shadow: 0 1px 8px rgb(38 38 38 / 0.5);
 }
 
 .certs__sub {
   max-width: 56ch;
   text-align: center;
-  color: #6f6a63;
+  color: #fffdf8;
+  text-shadow: 0 1px 6px rgb(38 38 38 / 0.5);
   font-weight: 500;
   font-size: clamp(0.9rem, 1.35vw, 1.15rem);
   line-height: 1.5;
@@ -1082,7 +1082,7 @@ body.viewer-open {
   align-items: center;
   gap: clamp(2rem, 5vw, 5.5rem);
   padding: 7.75rem clamp(1.5rem, 4vw, 4.5rem) 3.5rem; /* clears the navbar pill */
-  background: url("assets/about_background.png") center / cover no-repeat;
+  background: url("assets/kaalam1_bg.png") center / cover no-repeat;
 }
 
 /* Portrait poster, so it runs taller than the landscape certificate shots. */
@@ -1130,9 +1130,22 @@ body.viewer-open {
   line-height: 1.55;
 }
 
-/* KAALAM 2 mirrors KAALAM 1: write-up left, poster right. */
+/* KAALAM 2 mirrors KAALAM 1: write-up left, poster right — and swaps in its
+   own plate, shaded panel on the right behind the poster. */
 .kaalam--flip {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  background: url("assets/kaalam2_bg.png") center / cover no-repeat;
+}
+
+/* The plates' shaded panels run to ~59% of the width on kaalam1_bg and from
+   ~45% on kaalam2_bg, so each write-up is padded away from the panel edge
+   into the cream zone — right-inset for KAALAM 1, left-inset for KAALAM 2. */
+.kaalam:not(.kaalam--flip) .kaalam__copy {
+  padding-left: clamp(2.5rem, 5.5vw, 7rem);
+}
+
+.kaalam--flip .kaalam__copy {
+  padding-right: clamp(2rem, 4vw, 5rem);
 }
 
 /* The Kaalam pills read bigger than the certificate labels and hang a little
@@ -1157,7 +1170,7 @@ body.viewer-open {
   scroll-snap-align: start;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  background: url("assets/about_background.png") center / cover no-repeat;
+  background: url("assets/maptalks_bg.png") center / cover no-repeat;
 }
 
 .maptalks__head {
@@ -1620,6 +1633,12 @@ body.viewer-open {
   /* the mirrored screen still stacks poster-first, like KAALAM 1 */
   .kaalam--flip .kaalam__card {
     order: -1;
+  }
+
+  /* the panel insets are for the desktop two-column spread only */
+  .kaalam__copy {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   /* MapTalks stacks: header copy, posters one column over the banner, then
