@@ -1045,6 +1045,120 @@ body.viewer-open {
   transform: translate(-50%, 68%);
 }
 
+/* ---------- MapTalks section (certificates page, fourth screen) ---------- */
+
+/* Same full-screen recipe as the other certificate screens: the gold
+   typography block up top, then the YouthMappers audience photo bled across
+   the lower half with the three lecture posters straddling its top edge and
+   the credit line riding low over the photo, per the mock. */
+.maptalks {
+  position: relative;
+  height: 100vh;
+  min-height: 660px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: url("assets/about_background.png") center / cover no-repeat;
+}
+
+.maptalks__head {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: clamp(0.4rem, 1.2vh, 0.9rem);
+  padding: 7.5rem clamp(1.5rem, 5vw, 4.5rem) 0; /* clears the navbar pill */
+  text-align: center;
+}
+
+.maptalks__title {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.05;
+  color: var(--ink);
+  text-shadow: 0 2px 0 rgb(38 38 38 / 0.18);
+  font-size: min(clamp(1.9rem, 4.6vw, 4rem), 8.5vh);
+}
+
+.maptalks__topic {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+  color: #fffdf8;
+  text-shadow: 0 1px 8px rgb(38 38 38 / 0.5);
+  font-size: min(clamp(1.15rem, 2.5vw, 2.2rem), 5vh);
+}
+
+/* white over the gold band, like the mock's paragraph — shadow carries
+   legibility */
+.maptalks__sub {
+  margin: 0;
+  max-width: min(92vw, 78rem);
+  text-align: center;
+  color: #fffdf8;
+  text-shadow: 0 1px 6px rgb(38 38 38 / 0.5);
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1.25vw, 1.1rem);
+  line-height: 1.5;
+}
+
+/* The mock's baked-in bottom scrim is recreated as a gradient so the credit
+   line stays readable without editing the photo. Pinned to the slide's bottom
+   edge with a capped height — the slack stays in the gold header band. */
+.maptalks__banner {
+  position: relative;
+  align-self: end;
+  height: clamp(18rem, 52vh, 30rem);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  justify-items: center;
+  background:
+    linear-gradient(rgb(0 0 0 / 0) 55%, rgb(0 0 0 / 0.45)),
+    url("assets/youthmappers.jpg") center / cover no-repeat;
+}
+
+/* Positive top margin keeps the posters clear of the header copy above the
+   banner; align-items centers the taller feature poster over the sides,
+   as in the mock. */
+.maptalks__cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 25rem) minmax(0, 19rem);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: center;
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+}
+
+.maptalks__cards .cert-card__img {
+  height: clamp(8rem, 20vh, 13rem);
+}
+
+.maptalks__cards .cert-card--feature .cert-card__img {
+  height: clamp(10rem, 26vh, 16rem);
+}
+
+.maptalks__caption {
+  grid-row: 3;
+  align-self: end;
+  margin: 0 0 clamp(0.9rem, 2.5vh, 1.6rem);
+  max-width: min(92vw, 72rem);
+  padding: 0 1.25rem;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.25;
+  color: #fffdf8;
+  text-shadow: 0 2px 8px rgb(0 0 0 / 0.6);
+  font-size: min(clamp(1.05rem, 2.3vw, 1.9rem), 5vh);
+}
+
 /* ---------- Contact page ---------- */
 
 /* The contact slide (a 16:9 plate with every detail baked in) is the whole
@@ -1382,6 +1496,51 @@ body.viewer-open {
   /* the mirrored screen still stacks poster-first, like KAALAM 1 */
   .kaalam--flip .kaalam__card {
     order: -1;
+  }
+
+  /* MapTalks stacks: header copy, posters one column over the banner, then
+     the credit line — no straddle crop on small screens. */
+  .maptalks {
+    height: auto;
+    min-height: 100vh;
+    grid-template-rows: none;
+  }
+
+  .maptalks__head {
+    padding: 8.5rem 1.25rem 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .maptalks__title {
+    font-size: clamp(1.5rem, 6.5vw, 2.2rem);
+  }
+
+  .maptalks__topic {
+    font-size: clamp(1.05rem, 4.6vw, 1.5rem);
+  }
+
+  .maptalks__banner {
+    margin-top: 0;
+    align-self: stretch;
+    height: auto;
+    grid-template-rows: none;
+    padding: 3.5rem 1.25rem 1.5rem;
+  }
+
+  .maptalks__cards {
+    grid-template-columns: 1fr;
+    width: min(94vw, 600px);
+    margin-top: 0;
+  }
+
+  .maptalks__cards .cert-card__img,
+  .maptalks__cards .cert-card--feature .cert-card__img {
+    height: min(52vh, 65vw);
+  }
+
+  .maptalks__caption {
+    margin-top: 2rem;
+    font-size: clamp(1rem, 4.4vw, 1.4rem);
   }
 
   .footer {
