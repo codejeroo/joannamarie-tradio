@@ -779,7 +779,7 @@ body.viewer-open {
   grid-template-columns: 1fr 1.18fr 1fr;
   gap: clamp(1rem, 3vw, 2.5rem);
   align-items: start;
-  width: min(1240px, 92vw);
+  width: min(1480px, 95vw);
   margin-top: 0.5rem;
 }
 
@@ -810,13 +810,13 @@ body.viewer-open {
 .cert-card__img {
   display: block;
   width: 100%;
-  height: 23vh;
+  height: 29vh;
   object-fit: cover;
   border-radius: 2px;
 }
 
 .cert-card--feature .cert-card__img {
-  height: 28.5vh;
+  height: 36vh;
 }
 
 .cert-card__label {
@@ -836,6 +836,120 @@ body.viewer-open {
   padding: 0.5em 1.4em;
   white-space: nowrap;
   box-shadow: 0 6px 16px rgb(38 38 38 / 0.25);
+}
+
+/* ---------- MAGEC section (certificates page, second screen) ---------- */
+
+/* Same full-screen recipe as .certs; the banner strip up top carries its own
+   photo, and the card row straddles the banner's bottom edge like the mock. */
+.magec {
+  position: relative;
+  height: 100vh;
+  min-height: 660px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  justify-items: center;
+  gap: clamp(0.5rem, 1.6vh, 1.5rem);
+  background: url("assets/about_background.png") center / cover no-repeat;
+}
+
+/* Full-bleed crowd strip cropped out of the poster's middle band; the gold
+   border is the mock's olive band above the photo. padding-top clears the
+   fixed navbar pill so the overlaid title never sits behind it. */
+.magec__banner {
+  width: 100%;
+  height: clamp(13rem, 38vh, 25rem);
+  border-top: clamp(1.25rem, 4vh, 2.25rem) solid #ab8c2b;
+  /* 130% width crops the poster's white side frames out of the strip; the
+     red background-color fills any sliver the crop leaves. */
+  background: #8d1a1a url("assets/magec_2.jpg") center 56% / 130% auto no-repeat;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  padding: clamp(7.75rem, 15vh, 8.5rem) 1rem 0;
+}
+
+.magec__banner-title {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.05;
+  color: #fffdf8;
+  text-shadow: 0 2px 10px rgb(0 0 0 / 0.55);
+  font-size: min(clamp(2rem, 5vw, 4.25rem), 8vh);
+}
+
+/* Negative top margin pulls the row up over the banner, as in the mock. */
+.magec__cards {
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 24rem) minmax(0, 19rem);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: start;
+  margin-top: clamp(-13rem, -9vh, -4rem);
+}
+
+/* the mock's white photo mats */
+.magec__cards .cert-card {
+  border: 5px solid #fffdf8;
+}
+
+.magec__cards .cert-card--feature {
+  border-width: 8px;
+}
+
+/* center card rides higher than the sides, opposite of the GeoSTEMS stagger */
+.magec__cards .cert-card:not(.cert-card--feature) {
+  margin-top: clamp(2rem, 5vh, 4rem);
+}
+
+.magec__cards .cert-card__img {
+  height: clamp(9rem, 22vh, 14rem);
+}
+
+.magec__cards .cert-card--feature .cert-card__img {
+  height: clamp(11rem, 27vh, 18rem);
+}
+
+.magec__title {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.15;
+  max-width: min(90vw, 60rem);
+  padding: 0 1.25rem;
+}
+
+.magec__title span {
+  display: block;
+}
+
+.magec__title-line1 {
+  color: var(--ink);
+  text-shadow: 0 2px 0 rgb(38 38 38 / 0.18);
+  font-size: min(clamp(1.6rem, 3.4vw, 3rem), 7vh);
+}
+
+/* white over the cream contour art, per the mock — shadow carries legibility */
+.magec__title-line2 {
+  color: #fffdf8;
+  text-shadow: 0 1px 8px rgb(38 38 38 / 0.5);
+  font-size: min(clamp(1.3rem, 2.6vw, 2.3rem), 5.5vh);
+}
+
+.magec__sub {
+  max-width: min(96vw, 80rem);
+  text-align: center;
+  color: #fffdf8;
+  text-shadow: 0 1px 6px rgb(38 38 38 / 0.5);
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1.25vw, 1.15rem);
+  line-height: 1.5;
+  padding: 0 1.25rem;
 }
 
 /* ---------- Responsive ---------- */
@@ -1052,7 +1166,7 @@ body.viewer-open {
 
   .certs__cards {
     grid-template-columns: 1fr;
-    width: min(92vw, 540px);
+    width: min(94vw, 600px);
   }
 
   .cert-card:not(.cert-card--feature) {
@@ -1061,7 +1175,46 @@ body.viewer-open {
 
   .cert-card__img,
   .cert-card--feature .cert-card__img {
-    height: min(44vh, 62vw);
+    height: min(52vh, 65vw);
+  }
+
+  /* MAGEC stacks like .certs: banner stays a strip, cards go one column. */
+  .magec {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 4.5rem;
+  }
+
+  .magec__banner {
+    height: clamp(12rem, 34vh, 20rem);
+    padding-top: 7.5rem;
+  }
+
+  .magec__banner-title {
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
+  }
+
+  .magec__cards {
+    grid-template-columns: 1fr;
+    width: min(94vw, 600px);
+    margin-top: -3rem;
+  }
+
+  .magec__cards .cert-card:not(.cert-card--feature) {
+    margin-top: 0;
+  }
+
+  .magec__cards .cert-card__img,
+  .magec__cards .cert-card--feature .cert-card__img {
+    height: min(52vh, 65vw);
+  }
+
+  .magec__title-line1 {
+    font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+  }
+
+  .magec__title-line2 {
+    font-size: clamp(1.05rem, 4.6vw, 1.5rem);
   }
 
   .footer {
