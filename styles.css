@@ -609,8 +609,12 @@ html {
   border-radius: 2px; /* repo keeps sharp rectangles for frames/photos */
 }
 
-/* Drive-style full-screen viewer (native dialog: Esc, focus trap, top layer) */
-.letter__viewer {
+/* ---------- Shared Drive-style viewer dialog ---------- */
+
+/* One dialog per page; any [data-viewer-src] element opens it (script.js).
+   Native dialog gives Esc, focus trap, focus-return, and top-layer
+   stacking above the navbar for free. */
+.viewer {
   border: 0;
   padding: 0;
   margin: auto;
@@ -622,15 +626,15 @@ html {
   overflow: hidden;
 }
 
-.letter__viewer::backdrop {
+.viewer::backdrop {
   background: rgb(18 16 12 / 0.86); /* near-black scrim, ink-tinted */
 }
 
-.letter__viewer[open] {
+.viewer[open] {
   animation: viewer-pop 0.26s cubic-bezier(0.2, 0.8, 0.25, 1);
 }
 
-.letter__viewer[open]::backdrop {
+.viewer[open]::backdrop {
   animation: viewer-fade 0.26s ease;
 }
 
@@ -647,7 +651,7 @@ html {
   }
 }
 
-.letter__viewer-stage {
+.viewer__stage {
   width: 100%;
   height: 100%;
   display: grid;
@@ -655,7 +659,7 @@ html {
   overflow: auto; /* becomes the pan container in the zoomed state */
 }
 
-.letter__viewer-img {
+.viewer__img {
   display: block;
   max-height: 88dvh;
   max-width: min(92vw, 820px);
@@ -665,16 +669,17 @@ html {
   box-shadow: 0 24px 80px rgb(0 0 0 / 0.5);
 }
 
-/* Click-to-1:1: full natural size; the stage scrolls to pan. */
-.letter__viewer-stage.is-zoomed .letter__viewer-img {
+/* Click-to-1:1: the image's own intrinsic size; the stage scrolls to pan. */
+.viewer__stage.is-zoomed .viewer__img {
   max-width: none;
   max-height: none;
-  width: 1654px;
+  width: auto;
+  height: auto;
   cursor: zoom-out;
   place-self: start center;
 }
 
-.letter__viewer-close {
+.viewer__close {
   position: fixed; /* pinned to the viewport, not the scrolled stage */
   top: 1.25rem;
   right: 1.25rem;
@@ -690,11 +695,11 @@ html {
   cursor: pointer;
 }
 
-.letter__viewer-close:hover {
+.viewer__close:hover {
   background: rgb(247 239 226 / 0.28);
 }
 
-.letter__viewer-close:focus-visible {
+.viewer__close:focus-visible {
   outline: 3px solid var(--yellow);
 }
 
@@ -704,14 +709,133 @@ body.viewer-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .letter__thumb {
+  .letter__thumb,
+  .cert-card {
     transition: none;
+    translate: none;
   }
 
-  .letter__viewer[open],
-  .letter__viewer[open]::backdrop {
+  .viewer[open],
+  .viewer[open]::backdrop {
     animation: none;
   }
+}
+
+/* ---------- Certificates page ---------- */
+
+/* about_background.png full-bleed (same recipe as .about); header block up
+   top, three staggered photo cards with straddling label pills below. */
+.certs {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  place-content: start center;
+  justify-items: center;
+  gap: clamp(0.75rem, 1.6vh, 1.25rem);
+  padding-top: 7.75rem; /* clears the fixed navbar pill */
+  background: url("assets/about_background.png") center / cover no-repeat;
+}
+
+.certs__title {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.05;
+  font-size: min(clamp(2.1rem, 5.6vw, 4.9rem), 11.5vh);
+}
+
+.certs__title span {
+  display: block;
+}
+
+.certs__title-line1 {
+  color: var(--ink);
+  text-shadow: 0 2px 0 rgb(38 38 38 / 0.18);
+}
+
+.certs__title-line2 {
+  color: #fffdf8;
+  background: rgb(38 38 38 / 0.5); /* translucent band behind the white line */
+  padding: 0 0.5em;
+}
+
+.certs__sub {
+  max-width: 56ch;
+  text-align: center;
+  color: #6f6a63;
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.35vw, 1.15rem);
+  line-height: 1.5;
+  padding: 0 1.25rem;
+}
+
+.certs__cards {
+  display: grid;
+  grid-template-columns: 1fr 1.18fr 1fr;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: start;
+  width: min(1240px, 92vw);
+  margin-top: 0.5rem;
+}
+
+.cert-card {
+  position: relative;
+  display: block;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: zoom-in;
+  box-shadow: 0 14px 40px rgb(38 38 38 / 0.22);
+  transition: translate 0.25s ease;
+}
+
+.cert-card:not(.cert-card--feature) {
+  margin-top: 0.75rem; /* the mockup's slight side-card stagger */
+}
+
+.cert-card:hover {
+  translate: 0 -6px; /* separate property — composes with the stagger margin */
+}
+
+.cert-card:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 4px;
+}
+
+.cert-card__img {
+  display: block;
+  width: 100%;
+  height: 23vh;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.cert-card--feature .cert-card__img {
+  height: 28.5vh;
+}
+
+.cert-card__label {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%); /* straddles the photo's bottom edge */
+  z-index: 1;
+  background: #1e3a2f; /* forest green — deliberate deviation, user-approved */
+  border: 1.5px solid var(--yellow);
+  color: var(--cream);
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  font-size: clamp(0.8rem, 1.15vw, 1rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5em 1.4em;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgb(38 38 38 / 0.25);
 }
 
 /* ---------- Responsive ---------- */
@@ -907,8 +1031,37 @@ body.viewer-open {
     height: min(56vh, 66vw);
   }
 
-  .letter__viewer-img {
+  .viewer__img {
     max-width: 92vw;
+  }
+
+  /* Certificates on small screens: the row stacks to one column; the page
+     grows past the viewport (snap is off here) and the extra bottom padding
+     absorbs the label pills overhanging the last photo. */
+  .certs {
+    height: auto;
+    min-height: 100vh;
+    padding: 8.5rem 0 4.5rem;
+  }
+
+  /* Step the header down — the desktop clamp floor (33.6px) makes the
+     "GEOSTEMS 2025 & 2026" band wider than a 390px viewport. */
+  .certs__title {
+    font-size: clamp(1.4rem, 6vw, 2.1rem);
+  }
+
+  .certs__cards {
+    grid-template-columns: 1fr;
+    width: min(92vw, 540px);
+  }
+
+  .cert-card:not(.cert-card--feature) {
+    margin-top: 0;
+  }
+
+  .cert-card__img,
+  .cert-card--feature .cert-card__img {
+    height: min(44vh, 62vw);
   }
 
   .footer {

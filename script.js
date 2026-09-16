@@ -14,18 +14,25 @@ links.addEventListener("click", (event) => {
   }
 });
 
-/* ---- Application Letter viewer (guarded: only on application-letter.html) ---- */
-const viewer = document.getElementById("letter-viewer");
+/* ---- Shared image viewer (guarded: only on pages with a #viewer dialog) ----
+   Any element with [data-viewer-src] opens the dialog with that image;
+   data-viewer-alt / data-viewer-label customize the accessible names. */
+const viewer = document.getElementById("viewer");
 
 if (viewer) {
-  const thumb = document.querySelector(".letter__thumb");
-  const closeBtn = viewer.querySelector(".letter__viewer-close");
-  const stage = viewer.querySelector(".letter__viewer-stage");
-  const bigImg = viewer.querySelector(".letter__viewer-img");
+  const closeBtn = viewer.querySelector(".viewer__close");
+  const stage = viewer.querySelector(".viewer__stage");
+  const bigImg = viewer.querySelector(".viewer__img");
 
-  thumb.addEventListener("click", () => {
-    viewer.showModal();
-    document.body.classList.add("viewer-open");
+  document.querySelectorAll("[data-viewer-src]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      stage.classList.remove("is-zoomed"); // every open starts fitted
+      bigImg.src = trigger.dataset.viewerSrc;
+      bigImg.alt = trigger.dataset.viewerAlt || "";
+      viewer.setAttribute("aria-label", trigger.dataset.viewerLabel || "Image viewer");
+      viewer.showModal();
+      document.body.classList.add("viewer-open");
+    });
   });
 
   // Fires for every close path (Esc, button, scrim) — the one place to clean up.
