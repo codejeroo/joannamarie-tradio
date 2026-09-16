@@ -552,21 +552,166 @@ html {
 
 /* ---------- Application Letter page ---------- */
 
-/* Whole page is the letter artwork (application_letter.png, ~16:9) — at
-   16:9-class viewports cover crops nothing; it fills edge to edge. */
+/* applicationletter_bg.png (~16:9, title baked top-center) fills the
+   viewport; the scanned letter sits over the lower art as a paper card.
+   Clicking the card opens the Drive-style viewer dialog below. */
 .letter {
+  position: relative;
   height: 100vh;
   min-height: 620px;
   overflow: hidden;
   scroll-snap-align: start;
-  background: var(--cream); /* matches the art's own tone for any letterbox */
+  display: grid;
+  place-items: center;
+  background: #fcf7ed; /* the plate's own cream — the gap under the nav must not seam */
 }
 
-.letter__art {
-  display: block;
+/* Inset from the top so the baked title clears the 88px navbar pill; the
+   cover crop then eats the decorative art bottom, never the title. */
+.letter__bg {
+  position: absolute;
+  /* top inset only, box kept full-height: it hangs 5.5rem past the bottom,
+     so cover always fills the visible area while the title sits clear of
+     the navbar and the crop eats the decorative art bottom instead. */
+  inset: 5.5rem 0 auto 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 0;
+}
+
+.letter__thumb {
+  position: relative;
+  z-index: 10; /* above the bg art; the fixed navbar (z-index 50) stays on top */
+  display: block;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: zoom-in;
+  transform: translateY(16vh); /* bottom-anchored, clear of the title lettering */
+  box-shadow: 0 14px 40px rgb(38 38 38 / 0.22);
+  transition: transform 0.25s ease;
+}
+
+.letter__thumb:hover {
+  transform: translateY(calc(16vh - 6px));
+}
+
+.letter__thumb:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 4px;
+}
+
+.letter__thumb-img {
+  display: block;
+  height: min(55vh, 52vw); /* preserves the scan's portrait ratio */
+  width: auto;
+  border-radius: 2px; /* repo keeps sharp rectangles for frames/photos */
+}
+
+/* Drive-style full-screen viewer (native dialog: Esc, focus trap, top layer) */
+.letter__viewer {
+  border: 0;
+  padding: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100dvh;
+  background: transparent; /* the scrim is the backdrop, not a frame */
+  overflow: hidden;
+}
+
+.letter__viewer::backdrop {
+  background: rgb(18 16 12 / 0.86); /* near-black scrim, ink-tinted */
+}
+
+.letter__viewer[open] {
+  animation: viewer-pop 0.26s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+.letter__viewer[open]::backdrop {
+  animation: viewer-fade 0.26s ease;
+}
+
+@keyframes viewer-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes viewer-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.letter__viewer-stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: auto; /* becomes the pan container in the zoomed state */
+}
+
+.letter__viewer-img {
+  display: block;
+  max-height: 88dvh;
+  max-width: min(92vw, 820px);
+  width: auto;
+  height: auto;
+  cursor: zoom-in;
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.5);
+}
+
+/* Click-to-1:1: full natural size; the stage scrolls to pan. */
+.letter__viewer-stage.is-zoomed .letter__viewer-img {
+  max-width: none;
+  max-height: none;
+  width: 1654px;
+  cursor: zoom-out;
+  place-self: start center;
+}
+
+.letter__viewer-close {
+  position: fixed; /* pinned to the viewport, not the scrolled stage */
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(247 239 226 / 0.14);
+  color: var(--cream);
+  cursor: pointer;
+}
+
+.letter__viewer-close:hover {
+  background: rgb(247 239 226 / 0.28);
+}
+
+.letter__viewer-close:focus-visible {
+  outline: 3px solid var(--yellow);
+}
+
+/* Scroll lock while the viewer is open. */
+body.viewer-open {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter__thumb {
+    transition: none;
+  }
+
+  .letter__viewer[open],
+  .letter__viewer[open]::backdrop {
+    animation: none;
+  }
 }
 
 /* ---------- Responsive ---------- */
@@ -737,20 +882,33 @@ html {
     height: auto;
   }
 
-  /* Letter page shows the artwork whole on small screens — cover would
-     slice the paragraph. Cream letterboxing, cleared of the fixed navbar. */
+  /* Letter page on small screens: top-pinned cover keeps the baked title
+     visible (bottom art detail is acceptable to lose); the card carries the
+     letter, pushed further down so it clears the fixed navbar. */
   .letter {
-    height: auto;
-    min-height: 100vh;
-    display: grid;
-    place-content: center;
-    padding: 8.5rem 1.25rem 2.5rem;
+    height: 100vh;
+    min-height: 620px;
   }
 
-  .letter__art {
-    height: auto;
-    max-width: min(92vw, 720px);
-    box-shadow: 0 10px 28px rgb(38 38 38 / 0.16);
+  /* the collapsed navbar pill sits taller on phones — clear it a bit more */
+  .letter__bg {
+    inset: 7rem 0 auto 0;
+  }
+
+  .letter__thumb {
+    transform: translateY(10vh);
+  }
+
+  .letter__thumb:hover {
+    transform: translateY(calc(10vh - 6px));
+  }
+
+  .letter__thumb-img {
+    height: min(56vh, 66vw);
+  }
+
+  .letter__viewer-img {
+    max-width: 92vw;
   }
 
   .footer {

@@ -37,11 +37,41 @@
 
   <main class="letter">
     <img
-      class="letter__art"
-      src="assets/application_letter.png"
-      alt="Application letter: Thank you for taking the time to view my application. This letter is a reflection of my qualifications, experiences, and genuine interest in contributing to your team and organization. I look forward to the opportunity to be part of your esteemed organization."
+      class="letter__bg"
+      src="assets/applicationletter_bg.png"
+      alt="Application Letter — survey-themed plate with compass rose, contour map, and total station"
     />
+    <button
+      class="letter__thumb"
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="letter-viewer"
+      aria-label="Open the application letter in a full-screen viewer"
+    >
+      <img
+        class="letter__thumb-img"
+        src="assets/application_letter.jpg"
+        alt="Application letter to Ma. Theresa J. Allen, Regional Executive Director, DENR Regional Office XIII, expressing interest in the Engineer I (Geodetic Surveys Division) position — by Joanna Marie S. Tradio, Licensed Geodetic Engineer."
+      />
+    </button>
   </main>
+
+  <dialog class="letter__viewer" id="letter-viewer" aria-label="Application letter, enlarged">
+    <button class="letter__viewer-close" type="button" aria-label="Close viewer">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <path d="M5 5 L19 19 M19 5 L5 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none" />
+      </svg>
+    </button>
+    <div class="letter__viewer-stage">
+      <img
+        class="letter__viewer-img"
+        src="assets/application_letter.jpg"
+        alt="Application letter to Ma. Theresa J. Allen, Regional Executive Director, DENR Regional Office XIII, expressing interest in the Engineer I (Geodetic Surveys Division) position — by Joanna Marie S. Tradio, Licensed Geodetic Engineer."
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </dialog>
 
   <script src="script.js"></script>
 </body>
