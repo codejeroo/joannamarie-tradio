@@ -610,20 +610,14 @@ html {
 }
 
 /* Lead-in cover plate (application_letter.png) — a full-viewport intro shown
-   before the letter plate. It reuses .letter's frame; the whole 16:9 card is
-   fit (never cropped) and inset from the top so it clears the navbar pill. */
-.letter--cover {
-  padding: 5.5rem 4vw 3rem;
-}
-
+   before the letter plate. Full-bleed cover like every other section; the
+   plate's centred lettering survives the crop at any ratio. */
 .letter__cover-img {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 2px; /* repo keeps sharp rectangles for frames/photos */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* ---------- Shared Drive-style viewer dialog ---------- */
@@ -740,29 +734,25 @@ body.viewer-open {
 
 /* ---------- Certificates page — hero cover + certificates screens ---------- */
 
-/* Lead-in cover (certificates_bg.png) — the Application Letter cover's
-   recipe: full viewport, the whole 16:9 plate fit (never cropped) so its
-   baked-in "Certificates" lettering always survives, inset past the navbar
-   pill, on the plate's own cream so the gap above never seams. */
+/* Lead-in cover (certificates_bg.png) — the same full-bleed recipe as every
+   other section: the plate covers the whole viewport, its centred
+   "Certificates" lettering surviving the crop at any ratio, on the plate's
+   own cream until the img paints. */
 .certs-hero {
   position: relative;
   height: 100vh;
   min-height: 620px;
   overflow: hidden;
   scroll-snap-align: start;
-  display: grid;
-  place-items: center;
-  padding: 5.5rem 4vw 3rem;
   background: #faf3e6;
 }
 
 .certs-hero__img {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  border-radius: 2px; /* repo keeps sharp rectangles for frames/photos */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* about_background.png full-bleed like the other certificate screens; the
@@ -1490,11 +1480,6 @@ body.viewer-open {
     height: min(56vh, 66vw);
   }
 
-  /* cover plate clears the taller collapsed navbar on phones */
-  .letter--cover {
-    padding: 7rem 5vw 2.5rem;
-  }
-
   /* Phones show the contact slide whole — cover would crop the detail
      columns away at portrait ratios. */
   .contact {
@@ -1522,11 +1507,6 @@ body.viewer-open {
     height: auto;
     min-height: 100vh;
     padding: 8.5rem 0 4.5rem;
-  }
-
-  /* Cover plate clears the taller collapsed navbar on phones. */
-  .certs-hero {
-    padding: 7rem 5vw 2.5rem;
   }
 
   /* Certificate screen on small screens: same stack as .certs — cards go
