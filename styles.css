@@ -588,13 +588,13 @@ html {
   padding: 0;
   background: none;
   cursor: zoom-in;
-  transform: translateY(16vh); /* bottom-anchored, clear of the title lettering */
+  transform: translateY(20vh); /* bottom-anchored, clear of the title lettering */
   box-shadow: 0 14px 40px rgb(38 38 38 / 0.22);
   transition: transform 0.25s ease;
 }
 
 .letter__thumb:hover {
-  transform: translateY(calc(16vh - 6px));
+  transform: translateY(calc(20vh - 6px));
 }
 
 .letter__thumb:focus-visible {
@@ -736,6 +736,104 @@ body.viewer-open {
   .viewer[open]::backdrop {
     animation: none;
   }
+}
+
+/* ---------- Certificates page — hero cover + certificates screens ---------- */
+
+/* Lead-in cover (certificates_bg.png) — the Application Letter cover's
+   recipe: full viewport, the whole 16:9 plate fit (never cropped) so its
+   baked-in "Certificates" lettering always survives, inset past the navbar
+   pill, on the plate's own cream so the gap above never seams. */
+.certs-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  place-items: center;
+  padding: 5.5rem 4vw 3rem;
+  background: #faf3e6;
+}
+
+.certs-hero__img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 2px; /* repo keeps sharp rectangles for frames/photos */
+}
+
+/* about_background.png full-bleed like the other certificate screens; the
+   two scans sit side by side in equal frames, shown whole (contain — the
+   differing paper ratios would crop text under cover) and open in the
+   shared viewer like every cert-card. */
+.cert-docs {
+  position: relative;
+  height: 100vh;
+  min-height: 660px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  place-content: start center;
+  justify-items: center;
+  gap: clamp(0.75rem, 1.6vh, 1.25rem);
+  padding-top: 7.75rem; /* clears the fixed navbar pill */
+  background: url("assets/about_background.png") center / cover no-repeat;
+}
+
+.cert-docs__title {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.05;
+  font-size: min(clamp(2.1rem, 5.6vw, 4.9rem), 11.5vh);
+}
+
+.cert-docs__title span {
+  display: block;
+}
+
+.cert-docs__title-line1 {
+  color: var(--ink);
+  text-shadow: 0 2px 0 rgb(38 38 38 / 0.18);
+}
+
+.cert-docs__title-line2 {
+  color: #fffdf8;
+  background: rgb(38 38 38 / 0.5); /* translucent band behind the white line */
+  padding: 0 0.5em;
+}
+
+.cert-docs__sub {
+  max-width: 56ch;
+  text-align: center;
+  color: #6f6a63;
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.35vw, 1.15rem);
+  line-height: 1.5;
+  padding: 0 1.25rem;
+}
+
+.cert-docs__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 31rem));
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  justify-content: center;
+  align-items: start;
+  width: min(1480px, 95vw);
+  margin-top: 0.5rem;
+}
+
+/* Equal frames for the two differently shaped scans; the paper-cream fill
+   carries the letterbox so the whole document reads as one sheet. */
+.cert-docs .cert-card__img {
+  height: min(38vh, 40vw);
+  object-fit: contain;
+  background: #fdfaf2;
 }
 
 /* ---------- Certificates page ---------- */
@@ -1411,6 +1509,32 @@ body.viewer-open {
     height: auto;
     min-height: 100vh;
     padding: 8.5rem 0 4.5rem;
+  }
+
+  /* Cover plate clears the taller collapsed navbar on phones. */
+  .certs-hero {
+    padding: 7rem 5vw 2.5rem;
+  }
+
+  /* Certificate screen on small screens: same stack as .certs — cards go
+     one column, the page grows past the viewport (snap is off here). */
+  .cert-docs {
+    height: auto;
+    min-height: 100vh;
+    padding: 8.5rem 0 4.5rem;
+  }
+
+  .cert-docs__title {
+    font-size: clamp(1.4rem, 6vw, 2.1rem);
+  }
+
+  .cert-docs__cards {
+    grid-template-columns: 1fr;
+    width: min(94vw, 600px);
+  }
+
+  .cert-docs .cert-card__img {
+    height: min(52vh, 65vw);
   }
 
   /* Step the header down — the desktop clamp floor (33.6px) makes the
