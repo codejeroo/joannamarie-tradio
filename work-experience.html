@@ -58,6 +58,53 @@
       </div>
     </section>
 
+    <section class="surveyor" aria-label="Surveyor fieldwork collage">
+      <img
+        class="surveyor__bg"
+        src="assets/work-experience_bg.png"
+        alt=""
+        aria-hidden="true"
+      />
+      <div class="surveyor__grid">
+        <div class="surveyor__col surveyor__col--a">
+          <img
+            class="surveyor__cell"
+            style="object-position: 50% 60%"
+            src="assets/surveyor_1.jpg"
+            alt="A GNSS field controller held up outside Caraga Regional Hospital, its screen showing a staked wall point"
+          />
+          <img
+            class="surveyor__cell"
+            style="object-position: 60% 50%"
+            src="assets/surveyor_2.jpg"
+            alt="A roving GNSS receiver on a mini pole, held among garden foliage during a boundary survey"
+          />
+        </div>
+        <div class="surveyor__col surveyor__col--b">
+          <img
+            class="surveyor__cell"
+            style="object-position: 50% 65%"
+            src="assets/surveyor_3.jpg"
+            alt="A surveyor holding the GNSS rover pole vertical against a building's corner wall"
+          />
+          <img
+            class="surveyor__cell"
+            style="object-position: 50% 45%"
+            src="assets/surveyor_4.jpg"
+            alt="A rodman carrying the rover along a grassy boundary line while the surveyor follows on a tablet"
+          />
+        </div>
+        <img
+          class="surveyor__cell surveyor__cell--ts"
+          style="object-position: 45% 50%"
+          src="assets/surveyor_5.jpg"
+          alt="A surveyor sighting a total station on a tripod along a fenced property line"
+        />
+        <span class="surveyor__rule" aria-hidden="true"></span>
+        <h2 class="surveyor__word">Surveyor</h2>
+      </div>
+    </section>
+
     <section
       class="ojt"
       id="ojt"
@@ -112,7 +159,44 @@
         </p>
       </div>
     </section>
+
+    <section class="certshot" aria-label="OJT completion certificate">
+      <img
+        class="certshot__bg"
+        src="assets/about_background.png"
+        alt=""
+        aria-hidden="true"
+      />
+      <button
+        class="certshot__frame"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="viewer"
+        aria-label="Open the OJT completion certificate in a full-screen viewer"
+        data-viewer-src="assets/work-experience_cert.png"
+        data-viewer-alt="Certificate of completion of the On-The-Job Training at BPA Abatayo Land Surveying Services, presented to Joanna Marie S. Tradio."
+        data-viewer-label="OJT completion certificate, enlarged"
+      >
+        <img
+          class="certshot__img"
+          src="assets/work-experience_cert.png"
+          alt="BPA Abatayo Land Surveying Services certificate of completion of the On-The-Job Training, presented to Joanna Marie S. Tradio for an exemplary total of 240 working hours, given 1 August 2026 and signed by Engr. Broddett B. Abatayo."
+          loading="lazy"
+        />
+      </button>
+    </section>
   </main>
+
+  <dialog class="viewer" id="viewer">
+    <button class="viewer__close" type="button" aria-label="Close viewer">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <path d="M5 5 L19 19 M19 5 L5 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none" />
+      </svg>
+    </button>
+    <div class="viewer__stage">
+      <img class="viewer__img" alt="" />
+    </div>
+  </dialog>
 
   <script src="script.js"></script>
 </body>

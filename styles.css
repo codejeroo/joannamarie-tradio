@@ -756,7 +756,97 @@ html {
   background: var(--ink);
 }
 
-/* Second screen of the Work Experience page: four field prints in a row
+/* Second screen of the Work Experience page: the mockup's SURVEYOR plate —
+   five field prints collaged into three columns (controller strip + rover
+   close-up stacked left, wall shot + line run stacked centre, the
+   total-station profile full-height right),
+   on the same yellow contour plate that opens the page. */
+.surveyor {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  place-items: center;
+  padding: 8rem 4vw 3rem; /* top clears the fixed navbar pill, as in .ojt */
+  background: #fde265; /* the plate's own yellow — no seam before it paints */
+}
+
+.surveyor__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The mockup's collage box is ≈ 1.87 wide; the calc keeps it whole between
+   the navbar pill and the viewport foot on short screens (8rem + 3rem of
+   section padding = 11rem). */
+.surveyor__grid {
+  position: relative; /* anchors the rule + wordmark; above the backdrop */
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.27fr; /* mockup column widths */
+  gap: clamp(6px, 1vw, 18px);
+  width: min(92vw, calc((100vh - 11rem) * 1.87), 1480px);
+  aspect-ratio: 1.87 / 1;
+}
+
+.surveyor__col {
+  display: grid;
+  gap: clamp(6px, 1vw, 18px);
+  min-height: 0;
+}
+
+.surveyor__col--a {
+  grid-template-rows: 1fr 2.85fr; /* the controller strip rides the tall rover close-up */
+}
+
+.surveyor__col--b {
+  grid-template-rows: 1.72fr 1fr; /* the wall shot towers over the line run */
+}
+
+.surveyor__cell {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+}
+
+/* The mockup's yellow datum line: plate-yellow so it reads as the backdrop
+   sliced clean across the prints, sitting under the wordmark. */
+.surveyor__rule {
+  position: absolute;
+  z-index: 15; /* above the prints, below the wordmark */
+  left: 0;
+  top: 56.5%;
+  width: 62%; /* the mockup's rule ends at the centre column's right edge */
+  height: 3px;
+  background: #fde265;
+}
+
+/* Live type over the collage — Montserrat 800 white with a soft drop so it
+   lifts off four different prints at once. Absolute on desktop, so it never
+   claims a grid row. */
+.surveyor__word {
+  position: absolute;
+  z-index: 20;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(3rem, 11.5vw, 10.5rem);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: #fff;
+  text-shadow: 0 6px 18px rgb(38 38 38 / 0.4);
+}
+
+/* Third screen of the Work Experience page: four field prints in a row
    over a white type card, on the cream contour backdrop. Strip and card
    share the same column: 96vw, capped at the site's 1480px content width
    so wide screens don't stretch the print boxes past ~square and crop
@@ -840,6 +930,61 @@ html {
   font-weight: 500;
   line-height: 1.7;
   color: #1a1a1a;
+}
+
+/* Fourth screen of the Work Experience page: the OJT completion certificate
+   as a matted paper frame, centred on the same contour backdrop as the OJT
+   panel. Clicking opens the shared zoom viewer below — same trigger recipe
+   as the Certificates page's cert-cards. */
+.certshot {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: #fcf8ef; /* the backdrop's own cream — no seam before it paints */
+}
+
+.certshot__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.certshot__frame {
+  position: relative;
+  z-index: 10; /* above the backdrop; the fixed navbar (z-index 50) stays on top */
+  display: block;
+  padding: clamp(0.9rem, 2.2vh, 1.6rem) clamp(0.9rem, 1.8vw, 1.6rem);
+  border: 0;
+  border-radius: 2px; /* repo keeps sharp rectangles for frames/photos */
+  background: #fff;
+  box-shadow: 0 14px 40px rgb(38 38 38 / 0.22); /* the .letter__thumb paper drop */
+  cursor: zoom-in;
+  transition: transform 0.25s ease;
+}
+
+.certshot__frame:hover {
+  transform: translateY(-6px);
+}
+
+.certshot__frame:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 4px;
+}
+
+/* Height-driven on landscape screens: min(68vh, 58vw) keeps the whole matted
+   frame (face + matte + hover lift) inside the viewport and clear of the
+   navbar pill; 58vw is the cert's 3:2 face at 68vh. */
+.certshot__img {
+  display: block;
+  height: min(68vh, 58vw);
+  width: auto;
 }
 
 /* ---------- Shared Drive-style viewer dialog ---------- */
@@ -1737,6 +1882,50 @@ body.viewer-open {
     padding-right: 0.35em;
   }
 
+  /* SURVEYOR collage on phones: the three columns flatten into full-width
+     rows — each stacked pair becomes a side-by-side diptych and the
+     total-station print goes wide below; the wordmark drops out of the
+     overlay into the flow, and the datum rule goes (snap is off here). */
+  .surveyor__grid {
+    width: min(92vw, 640px);
+    aspect-ratio: auto;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .surveyor__col,
+  .surveyor__cell--ts,
+  .surveyor__word {
+    grid-column: 1 / -1;
+  }
+
+  .surveyor__col {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+  }
+
+  .surveyor__cell {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .surveyor__cell--ts {
+    aspect-ratio: 1 / 1; /* keeps the tripod head-and-instrument crop legible at full width */
+  }
+
+  .surveyor__rule {
+    display: none;
+  }
+
+  .surveyor__word {
+    position: static;
+    transform: none;
+    margin-top: 6vw;
+    font-size: clamp(2.6rem, 12vw, 4.5rem);
+    text-align: center;
+    white-space: normal;
+    text-shadow: 0 4px 12px rgb(38 38 38 / 0.25); /* over the plate, not the prints */
+  }
+
   /* OJT panel on phones: the four prints become a 2×2 mat and the card
      flows below them; the section grows past the viewport (snap is off). */
   .ojt {
@@ -1768,6 +1957,21 @@ body.viewer-open {
 
   .ojt__text {
     font-size: 0.95rem;
+  }
+
+  /* Certificate on phones: the matted print goes width-driven and the screen
+     grows past the viewport (snap is off) instead of squishing the face. */
+  .certshot {
+    height: auto;
+    min-height: 100vh;
+    padding: 7rem 6vw 3rem;
+  }
+
+  /* 76vw, not 84: the frame's 0.9rem matte on each side has to fit inside the
+     section's 6vw gutters too, or the matted edge clips off-viewport. */
+  .certshot__img {
+    height: auto;
+    width: min(76vw, 640px);
   }
 
   /* Phones show the contact slide whole — cover would crop the detail
