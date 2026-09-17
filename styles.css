@@ -756,6 +756,92 @@ html {
   background: var(--ink);
 }
 
+/* Second screen of the Work Experience page: four field prints in a row
+   over a white type card, on the cream contour backdrop. Strip and card
+   share the same column: 96vw, capped at the site's 1480px content width
+   so wide screens don't stretch the print boxes past ~square and crop
+   the heads out of the portrait photos. */
+.ojt {
+  position: relative;
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  /* centers when the viewport has room; `safe` falls back to top-anchored
+     (never under the fixed navbar) when the column overflows */
+  justify-content: safe center;
+  gap: clamp(1.25rem, 4.5vh, 2.75rem);
+  padding: 8rem 2vw 2rem; /* top clears the navbar pill (1.5rem + 88px) */
+  background: #fcf8ef; /* the backdrop's own cream — no seam before it paints */
+}
+
+.ojt__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ojt__strip {
+  position: relative; /* above the backdrop */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.5rem, 1.2vw, 1.25rem);
+  height: clamp(170px, 32vh, 420px); /* mockup box ratio ≈ 1.15 — taller boxes crop the portraits less */
+  max-width: min(96vw, 1480px); /* uncapped, wide viewports stretch each 1fr cell past the height cap */
+  margin-inline: auto;
+}
+
+.ojt__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ojt__card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: clamp(0.4rem, 1.1vh, 0.85rem);
+  max-width: min(96vw, 1480px); /* shares the strip's capped column */
+  margin-inline: auto;
+  padding: clamp(1rem, 2.4vh, 1.75rem) clamp(1.5rem, 3.6vw, 3.25rem)
+    clamp(1.4rem, 3.2vh, 2.25rem);
+  background: #fff;
+  border: 1px solid rgb(38 38 38 / 0.45); /* the mockup's hairline grey rule */
+  text-align: center;
+}
+
+/* The mockup's headline is a condensed grotesque at ~56px cap — Oswald,
+   the site's sanctioned condensed display face, not Montserrat. */
+.ojt__title {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(2.1rem, 6.2vw, 4.9rem);
+  font-weight: 500;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #1a1a1a;
+}
+
+.ojt__subtitle {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.3rem, 3.4vw, 2.75rem);
+  color: #ff2b2b; /* same off-token red as the reel wordmark above */
+}
+
+.ojt__text {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(0.95rem, 1.6vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: #1a1a1a;
+}
+
 /* ---------- Shared Drive-style viewer dialog ---------- */
 
 /* One dialog per page; any [data-viewer-src] element opens it (script.js).
@@ -1649,6 +1735,39 @@ body.viewer-open {
   .workexp__caption {
     letter-spacing: 0.35em;
     padding-right: 0.35em;
+  }
+
+  /* OJT panel on phones: the four prints become a 2×2 mat and the card
+     flows below them; the section grows past the viewport (snap is off). */
+  .ojt {
+    padding: 7rem 4vw 2.5rem;
+  }
+
+  .ojt__strip {
+    grid-template-columns: 1fr 1fr;
+    height: auto;
+    gap: 3vw;
+  }
+
+  .ojt__photo {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .ojt__card {
+    padding: 1.5rem 5vw 1.75rem;
+  }
+
+  .ojt__title {
+    font-size: clamp(1.6rem, 8vw, 2.6rem);
+  }
+
+  .ojt__subtitle {
+    font-size: clamp(1.1rem, 5.4vw, 1.7rem);
+  }
+
+  .ojt__text {
+    font-size: 0.95rem;
   }
 
   /* Phones show the contact slide whole — cover would crop the detail
