@@ -620,6 +620,63 @@ html {
   object-fit: cover;
 }
 
+/* ---------- Resume cover page ---------- */
+
+/* resume_bg.png bled full-bleed like the other cover plates; the two format
+   CTAs ride the plate's bottom art. Yellow capsules off the hero's palette. */
+.resume {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  place-items: end center;
+  padding: 0 1.25rem clamp(2.5rem, 8vh, 5.5rem);
+  background: #faf3e6; /* the plate's own cream — no seam before the img paints */
+}
+
+.resume__plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.resume__actions {
+  position: relative; /* above the plate — same z convention as .letter__thumb */
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+
+.resume__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.9rem 2.5rem;
+  border-radius: 999px;
+  background: var(--yellow);
+  box-shadow: 0 10px 28px rgb(38 38 38 / 0.18);
+  font-size: clamp(1rem, 1.4vw, 1.3rem);
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.resume__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgb(38 38 38 / 0.22);
+}
+
+.resume__cta:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
 /* ---------- Shared Drive-style viewer dialog ---------- */
 
 /* One dialog per page; any [data-viewer-src] element opens it (script.js).
@@ -721,7 +778,8 @@ body.viewer-open {
 
 @media (prefers-reduced-motion: reduce) {
   .letter__thumb,
-  .cert-card {
+  .cert-card,
+  .resume__cta {
     transition: none;
     translate: none;
   }
@@ -755,7 +813,7 @@ body.viewer-open {
   object-fit: cover;
 }
 
-/* about_background.png full-bleed like the other certificate screens; the
+/* likha_bg.png full-bleed (same plate as the Likha Summit screen); the
    two scans sit side by side in equal frames, shown whole (contain — the
    differing paper ratios would crop text under cover) and open in the
    shared viewer like every cert-card. */
@@ -770,7 +828,7 @@ body.viewer-open {
   justify-items: center;
   gap: clamp(0.75rem, 1.6vh, 1.25rem);
   padding-top: 7.75rem; /* clears the fixed navbar pill */
-  background: url("assets/about_background.png") center / cover no-repeat;
+  background: url("assets/likha_bg.png") center / cover no-repeat;
 }
 
 .cert-docs__title {
@@ -788,20 +846,20 @@ body.viewer-open {
 }
 
 .cert-docs__title-line1 {
-  color: var(--ink);
-  text-shadow: 0 2px 0 rgb(38 38 38 / 0.18);
+  color: #fffdf8; /* shadow carries legibility over the cream plate */
+  text-shadow: 0 1px 8px rgb(38 38 38 / 0.5);
 }
 
 .cert-docs__title-line2 {
   color: #fffdf8;
-  background: rgb(38 38 38 / 0.5); /* translucent band behind the white line */
-  padding: 0 0.5em;
+  text-shadow: 0 1px 8px rgb(38 38 38 / 0.5);
 }
 
 .cert-docs__sub {
   max-width: 56ch;
   text-align: center;
-  color: #6f6a63;
+  color: #fffdf8;
+  text-shadow: 0 1px 6px rgb(38 38 38 / 0.5);
   font-weight: 500;
   font-size: clamp(0.9rem, 1.35vw, 1.15rem);
   line-height: 1.5;
@@ -956,7 +1014,7 @@ body.viewer-open {
   display: grid;
   justify-items: center;
   gap: clamp(0.5rem, 1.6vh, 1.5rem);
-  background: url("assets/about_background.png") center / cover no-repeat;
+  background: url("assets/likha_bg.png") center / cover no-repeat; /* same plate as the Likha Summit screen above */
 }
 
 /* Full-bleed crowd strip cropped out of the poster's middle band; the gold
@@ -1277,10 +1335,11 @@ body.viewer-open {
 /* Inset from the top so the slide's tagline clears the 88px navbar pill;
    the box keeps full height and hangs past the bottom, so cover always
    fills the visible area while the crop eats the corner flourishes, never
-   the contact rows. */
+   the contact rows. 4.5rem rides the plate a little higher up the screen
+   while the baked tagline still clears the pill. */
 .contact__bg {
   position: absolute;
-  inset: 7rem 0 auto 0;
+  inset: 4.5rem 0 auto 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1478,6 +1537,17 @@ body.viewer-open {
 
   .letter__thumb-img {
     height: min(56vh, 66vw);
+  }
+
+  /* Resume cover on phones: the plate stays full-bleed; the CTAs stack into
+     a centered column riding the plate's bottom art. */
+  .resume__actions {
+    flex-direction: column;
+    width: min(92vw, 420px);
+  }
+
+  .resume__cta {
+    justify-content: center;
   }
 
   /* Phones show the contact slide whole — cover would crop the detail

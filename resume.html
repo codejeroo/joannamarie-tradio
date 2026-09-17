@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Information — Engr. Tradio — Surveyor Portfolio</title>
+  <title>Resume — Engr. Tradio — Surveyor Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -20,10 +20,10 @@
     <ul class="navbar__links" id="nav-links">
       <li><a href="index.html">HOME</a></li>
       <li><a href="application-letter.html">Application Letter</a></li>
-      <li><a href="resume.html">Resume</a></li>
+      <li><a class="is-active" href="resume.html">Resume</a></li>
       <li><a href="certificates.html">Certificates &amp; Achievements</a></li>
       <li><a href="#">Work Experience</a></li>
-      <li><a class="is-active" href="contact.html">Contact Me</a></li>
+      <li><a href="contact.html">Contact Me</a></li>
     </ul>
     <button
       class="navbar__toggle"
@@ -36,12 +36,16 @@
     </button>
   </nav>
 
-  <main class="contact">
+  <main class="resume" aria-label="Resume — choose a version">
     <img
-      class="contact__bg"
-      src="assets/contact_info.png"
-      alt="Contact Information slide: email joannatradio8@gmail.com; phone +63 968 509 0525; website www.joannatradio.vercel.app; location Upper Doongan Rotary Village, Butuan City."
+      class="resume__plate"
+      src="assets/resume_bg.png"
+      alt="Resume — survey-themed title plate with compass rose, flowing contour lines, a total station, and a welcome message."
     />
+    <div class="resume__actions">
+      <a class="resume__cta" href="corporate-resume.html">View Corporate Resume</a>
+      <a class="resume__cta" href="ats-resume.html">View ATS-Optimized Resume</a>
+    </div>
   </main>
 
   <script src="script.js"></script>
