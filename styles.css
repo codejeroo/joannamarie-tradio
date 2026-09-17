@@ -677,6 +677,85 @@ html {
   outline-offset: 3px;
 }
 
+/* ---------- Work Experience page ---------- */
+
+/* work-experience_bg.png is a plain yellow contour plate (no baked text),
+   so the player + title + caption are all real HTML over it. The Drive
+   player letterboxes its 4:3 cut inside a wide 12:5 box — the black bars
+   are the player's own, kept like the showreel's. */
+.workexp {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  place-items: center;
+  background: #fde265; /* the plate's own yellow — no seam before the img paints */
+}
+
+.workexp__plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.workexp__body {
+  position: relative; /* above the plate — same z convention as .letter__thumb */
+  z-index: 10;
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.25rem, 6vh, 3.5rem);
+  width: min(88vw, 1200px);
+  padding-top: 5.5rem; /* clears the fixed navbar pill; the column reads centered anyway */
+}
+
+/* Height-led sizing (ratio-preserved width) keeps the whole column inside
+   100vh — a vw-driven width here pushed the caption below the fold. */
+.workexp__player {
+  height: min(56vh, 500px);
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 12 / 5;
+  border: 0;
+  background: #000; /* the Drive player's own letterbox shows through on load */
+}
+
+.workexp__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.6rem, 9vw, 7.75rem); /* mockup: the wordmark spans ~77% of the viewport */
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #ff2b2b; /* mockup red — off-token, kept deliberately like the cert pills */
+}
+
+/* The mockup's twin hairlines flanking the caption: flex rules that grow
+   to fill the row, so the whole line spans the column edge to edge. */
+.workexp__caption {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  width: 100%;
+  font-size: clamp(0.95rem, 1.7vw, 1.35rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.55em; /* trailing spacing adds phantom width right of the E */
+  padding-right: 0.55em;
+  color: var(--ink);
+}
+
+.workexp__caption::before,
+.workexp__caption::after {
+  content: "";
+  flex: 1;
+  height: 3px;
+  background: var(--ink);
+}
+
 /* ---------- Shared Drive-style viewer dialog ---------- */
 
 /* One dialog per page; any [data-viewer-src] element opens it (script.js).
@@ -1548,6 +1627,28 @@ body.viewer-open {
 
   .resume__cta {
     justify-content: center;
+  }
+
+  /* Work Experience on phones: the wide player box would letterbox the cut
+     down to a strip — 16/9 keeps the video itself legible. */
+  .workexp__body {
+    width: min(92vw, 640px);
+    gap: clamp(1.25rem, 4vh, 2.5rem);
+  }
+
+  .workexp__player {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .workexp__title {
+    font-size: clamp(1.9rem, 8.4vw, 3rem); /* Montserrat 800 at the desktop floor overflows 390px */
+  }
+
+  .workexp__caption {
+    letter-spacing: 0.35em;
+    padding-right: 0.35em;
   }
 
   /* Phones show the contact slide whole — cover would crop the detail
